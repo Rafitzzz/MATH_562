@@ -1,0 +1,79 @@
+\subsection{Defining the problem}
+For $X_1, \ldots, X_n \sim^{i.i.d} \text{ } \mathcal{N}(\mu, \sigma^2)$, derive the limiting distribution of  $Y = \frac{1}{\bar{X}}$ as $n \rightarrow \infty$. Then, answer the following questions.
+\begin{enumerate}
+    \item Why can the event $\bar{X}$ be neglected.
+    \item What does the result tell us in practice.
+\end{enumerate}
+
+\vspace{0.2cm}
+
+\subsection{Solution}
+
+\vspace{0.2cm}
+
+We start by exploring some properties of the sample mean $\bar{X}$ of a sequence of idependent, identically distributed (\textit{i.i.d}) random variables from a population with mean $\mu$ and variance
+$\sigma^2$.
+
+\vspace{0.2cm}
+
+\begin{theorem}
+    \textbf{Central Limit Theorem (C.L.T.)}: as $n \rightarrow \inf$ the distribution of $\bar{X} \approx \mathcal{N}(\mu, \sigma^2)$. More formally, 
+    $$\sqrt{n}\left(\bar{X} - \mu\right) \rightarrow^d \mathcal{N}(0, \sigma^2)$$ where $\rightarrow^d$ denotes the convergence in distribution.
+\end{theorem}
+
+\vspace{0.2cm}
+
+Also, in order to derive the limiting distribution, we make use of the \textit{Delta Method}. This is a powerfull statistical tool that provides a way to find asymptotic
+distribution of a function $g(\bar{X})$.
+
+\begin{definition}
+    Let $g$ be our function in question. The delta method states that for a differentiable funtion with a non-zero evaluation of it's mean at it's derivative i.e. $g\prime(\mu) \neq 0$,
+    $$\sqrt{n}\left(g(\bar{X}) - g(\mu)\right) \rightarrow^d \mathcal{N}(0, \sigma^2 \left[g \prime (\mu)\right]^2)$$
+\end{definition}
+
+\vspace{0.2cm}
+
+Since our function $g(Y)= \frac{1}{X}$, we must assme that $\mu \neq 0$ in order for it to be defined at $g(\mu)$. Now, calculating the derivative of our function:
+$$g \prime (x) = - \frac{1}{x^2} \Rightarrow g \prime (\mu) = - \frac{1}{\mu^2}$$
+and so, $\left[ g \prime (\mu) \right]^2 = \left[- \frac{1}{\mu^2}\right]^2 = \frac{1}{\mu^4}$. We may now plug this value into the delta method, and obtain the folowing result.
+
+$$\text{Asymptotic variance: } \sigma^2 \left[g \prime (\mu)\right]^2 = \frac{\sigma^2}{\mu^4}$$ 
+
+Hence, for a sample size of $n$, we get that the `limiting distribution' is:
+
+$$Y_n = \frac{1}{\bar{X}_n} \approx \mathcal{N}\left(\frac{1}{\mu}, \frac{\sigma^2}{n \mu^4}\right)$$
+
+\vspace{0.2cm}
+
+\textbf{Why can the event $\bar{X}=0$ be neglected?}: Since $g(Y) = \frac{1}{X}$ is undefined at $X=0$, we must consider the case when $\bar{X}=0$. However, note that by definition 
+$\bar{X}= \frac{1}{n} \sum X_i$ (it is a linear combination of normal random variables).
+
+\vspace{0.2cm}
+
+\begin{remark}
+    \textbf{Funamental property of random variables:} $\mathbb{P}(\bar{X} = c) = 0 \text{ } \forall c \in \mathbb{C}$ i.e. there is zero probability that a random variable takes the
+    value of a constant.
+    $$\therefore \text{ } \mathbb{P}(\bar{X}=0)=0$$ 
+\end{remark}
+
+\vspace{0.2cm}
+
+Thus, our argument concludes.
+
+\vspace{0.2cm}
+
+\textbf{What does the result tell us in practice?} Our result gives a practical way to estimate the behaviour of the \textit{reciprocal} of the sample mean.
+
+\begin{itemize}
+    \item The distribution $Y = \frac{1}{X}$ is centered at $\frac{1}{\mu}$ (true value we're trying to estimate), hence, our estimator is asymptotically unbiased.
+    \item The variance $\frac{\sigma^2}{\mu^4}$ gives us insight into reliability of our estimator:
+    \begin{enumerate}
+        \item variance decreases as $n$ increases i.e. larger samples imply better estimations
+        \item variance increases as $\sigma^2$ (population variance) increases i.e. more variable data implies less precise estimates.
+    \end{enumerate}
+\end{itemize}
+
+\vspace{0.2cm}
+
+And so, we present the final verdict. We can estimate $\frac{1}{\mu}$ using $\frac{1}{\bar{X}}$ BUT (big but) we should be extremely cautious if we believe that $\mu$ (true population mean)
+might be close to zero. If this is the case, our estimate might be unreliable even if we have a very large sample. e.g. if $\mu = 0.1 \Rightarrow \frac{1}{(0.1)^4} = 10000$!!! (no bueno amigo).
