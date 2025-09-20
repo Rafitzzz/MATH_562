@@ -12,4 +12,292 @@ Data, dara and deitar; in short, statistics is the art of learning from data. We
 
  \vspace{0.2cm}
 
- So, a \textit{statistical inference} aims to use probability theory (big boy language, mathematical framework) in order to explain the variation in the data and to quantify the uncertainty in our conclusions.
+ So, a \textit{statistical inference} aims to use probability theory (big boy language; mathematical framework) in order to explain the variation in the data and to quantify the uncertainty in our conclusions.
+
+ \vspace{0.2cm}
+
+ As most mathematical fields, statistical theory has many branches, the main ones being:
+ \begin{itemize}
+   \item \textbf{Desctiptive statistics/ Exploratory Data Analysis (EDA)}: which is the art of \textbf{summarizing} and \textbf{visualizing} data.
+   \item \textbf{Inferential statistics}: a way of using probability theory in order to provide evidence for the statements we \textit{infer} abotu a certain situation.
+   \item \textbf{Algorithmic methods}: often used togetrher with inferential statistics, these are methods that are used to \textbf{fit models} to data in order to make predictions or decisions.
+   Nowadays, these methods are often associated with \textbf{machine learning} and \textbf{artificial intelligence}. 
+ \end{itemize}
+
+ \vspace{0.2cm}
+
+ \begin{remark}
+ Note that all of the above end up using \textbf{probability theory}. It is also important to define which type of analysis is being conduted in order to prevent horribly biased conclusions.
+ \end{remark}
+
+ Circling back to the elephant in the room, \textbf{data collection}, we have two main types of data:
+
+ \begin{itemize}
+   \item \textbf{Observational data}: where we merely observe the data, and try to make sense of it (little or no control whatsoever as for the data collection). This type of data is usually plagued with confounding variables (lurking variables) that might bias our conclusions.
+   \item \textbf{Experimental data}: where we have more control over the data collection process, e.g. we can plan an investigaton, design the experiment and gather the data. This method typically provides ``stronger" data, hence
+   stronger conclusions.  
+ \end{itemize}
+
+ \subsection{Some definitions}
+Since statisticians use a lot of jargon, here are some important definitions that will be used throughout the course.
+
+\begin{definition}
+   Main jargon used in statistics:
+   \begin{enumerate}
+      \item \textbf{Population:} The entire collection of individuals or objects about which information is desired.
+      \item \textbf{Sample:} A subset of the population that is used to gain information about the entire population.
+      \item \textbf{Random variable:} A variable whose value is subject to variations due to chance (i.e. randomness). It can take on different values, each with an associated probability. It can be \textit{discrete} (e.g. number of heads in 10 coin flips) or \textit{continuous} (e.g. height of a person).
+      It will be more formally defined later on, and we will use it more than a hight-strung porn addict uses pornhub. 
+      \item \textbf{(Probability) density function:} A function $f$ that describes the probability for a random variable $X$ to take on a given value $x$ i.e. $f(x) = \mathbb{P}(X=x)$.
+      \begin{itemize}
+         \item For a discrete random variable, it is called a \textbf{probability mass function (pmf)}.
+         \item For a continuous random variable, it is called a \textbf{probability density function (pdf)}.
+      \end{itemize}
+      \item \textbf{(Cumulative) distribution function:} A function $F$ that describes the probability for a random variable $X$ to take on a value less than or equal to $x$ i.e. $F(x) = \mathbb{P}(X \leq x)$.
+      \item \textbf{Statistical model:} For data $y$, a statistical model is a density function $f(y)$ defined for $y \in \mathcal{Y}$.
+      \item \textbf{Parametric model:} $f \equiv f(y;\theta)$ where $f$ is determined by parameters $\theta \in \Theta \subset \mathbb{R}^d$. If no such $\theta$ exists, 
+      the model is called \textbf{non-parametric}.
+      \item \textbf{Family of models:} Sometimes used to stress the idea that there might be many posibilities: $\{f(y;\theta) \vert \theta \in \Theta\}$.
+   \end{enumerate}
+\end{definition}
+
+There are many other definitions that will be introduced as we go along the course. Also there are some caveats to the above definitions.
+
+\begin{remark}
+   A parameter $\theta$ is usually split into two types $\theta = (\psi, \lambda)$ where $\psi$ is the parameter of interest and $\lambda$ is a nuisance parameter (not of interest, but still has to be accounted for).
+   i.g. whenever we wish to estimate the variance of a population we must also estimate the mean; in this case, the nuisance parameter.
+\end{remark}
+
+We must also denote the notation that will be used throughout the course as follows:
+
+\begin{itemize}
+   \item Vectors are allways \textbf{column vectors}, with row vectors being denoted by a superscript $T$ (transpose).
+   \item Lowercase letters denote \textbf{scalars}, e.g. $c, d, n \in \mathbb{C}$ one may also take $\mathbb{C}$ to be any arbitrary field $k$ (if you have no regard for beauty, you may as well fix $k=\mathbb{R}$); for a non-mathematical person, scalars $=$ constants.
+   \item Uppercase letters denote \textbf{random variables}, e.g. $X, Y, Z$ and their realizations (actual values) are denoted by lowercase letters $x, y, z$. 
+   \item Greek letters denote \textbf{parameters}, e.g. $\theta, \lambda, \mu, \sigma$; $\alpha$ is usually reserved for significance levels. 
+\end{itemize}
+
+\subsection{ProBABYlity theory basics}
+In order to understand statistical inference, we must first understand probability theory. Probability theory is a mathematical framework that allows us to quantify uncertainty and randomness. It provides the tools and concepts needed to model and analyze random phenomena. 
+
+\vspace{0.2cm}
+
+\begin{definition}
+   A probabulity space is a triple $(\Omega, \mathcal{F}, \mathbb{P})$ where:
+   \begin{itemize}
+      \item $\Omega$ is the sample space, i.e. the set of all possible outcomes of a random experiment.
+      \item $\mathcal{F}$ is a sigma-algebra on $\Omega$, i.e. a collection of subsets of $\Omega$ that:
+      \begin{enumerate}
+         \item includes the empty set i.e. $\emptyset \in \mathcal{F}$
+         \item is closed under \textit{complementation} i.e. if $A \in \mathcal{F}$ then $A^c \in \mathcal{F}$ (this actually tells us that $\emptyset^C = \Omega \in \mathcal{F}$).
+         \item is closed under countable unions i.e. if $A_1, A_2, \ldots \in \mathcal{F}$ then $\bigcup_{i=1}^{\infty} A_i \in \mathcal{F}$.
+      \end{enumerate}
+      \item $\mathbb{P}$ is a probability measure, i.e. a function that assigns a probability to each event in $\mathcal{F}$. More formally, $\mathbb{P}: \mathcal{F} \to [0,1]$ such that:
+      \begin{enumerate}
+         \item For any event $A \in \mathcal{F}$, we have $0 \leq \mathbb{P}(A) \leq 1$.
+         \item $\mathbb{P}(\Omega) = 1$ (the probability of the entire sample space is 1).
+         \item For any countable collection of \textit{disjoint} events $A_1, A_2, \ldots \in \mathcal{F}$, we have $\mathbb{P}\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} \mathbb{P}(\mathcal{A}_i)$.
+      \end{enumerate} 
+   \end{itemize}
+\end{definition}
+
+\vspace{0.2cm}
+
+Well, that was a mouthful, but it is important to understand the above definition as it is the foundation of probability theory and to thank daddy Kolmogorov for it. We would like to
+specify some important notions stated above. A collection of sets $\{A_i\}_{i \in \mathcal{I}}$ is said to be \textbf{disjoint} if $A_i \cap A_j = \emptyset$ for all $i \neq j$. The \textbf{complement} of a set $A$ is defined as $A^c = \Omega \setminus A = \Omega - A$.
+
+\begin{remark}
+   We call $\left( \Omega, \mathcal{F}\right)$ a measurable space, and the elements of $\mathcal{F}$ are called measurable sets or events. Also, from the definitions give, we may deduce the
+   \textbf{inclusion-exclusion principle}: for any two events $A, B \in \mathcal{F}$, we have $\mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B)$.
+\end{remark}
+
+\vspace{0.2cm}
+
+If we have that $\mathbb{P}(\mathcal{B}) > 0$ where $\mathcal{B} \subset \mathcal{F}$ we can define \textit{conditional} probabilities $\mathbb{P}(\mathcal{A} \vert \mathcal{B})$ and is read as ``the probability of $\mathcal{A}$ given $\mathcal{B}$".
+
+\begin{definition}
+   We define the conditional probability of an event $\mathcal{A}$ given an event $\mathcal{B}$ with $\mathbb{P}(\mathcal{B}) > 0$
+   $$\mathbb{P}(\mathcal{A} \vert \mathcal{B}) := \frac{\mathbb{P}(\mathcal{A} \cap \mathcal{B})}{\mathbb{P}(\mathcal{B})}$$
+\end{definition}
+
+\vspace{0.2cm}
+
+A really important result in probability theory is the notion of the multiplication rule, which is a direct consequence of the definition of conditional probability and one may derive
+one of the `holy grail' theorems in probability theory known as \textbf{Bayes Theroem} (which in my opinion is like applauding a baby for saying the word `mum'; with a bit of thought and playfulness, anyone can derive this).
+
+\begin{remark}
+   For any two events $\mathcal{A}, \mathcal{B} \in \mathcal{F}$ with $\mathbb{P}(\mathcal{B}) > 0$, we have the multiplication rule
+   $$\mathbb{P}(\mathcal{A} \cap \mathcal{B}) = \mathbb{P}(\mathcal{A} \vert \mathcal{B}) \mathbb{P}(\mathcal{B})$$ Please pause and ponder on this definition. If you for some reason have not yet thought, i'll spoil you (fucking lazy ass):
+   If these two events $\mathcal{A}, \mathcal{B}$ are independent, then $\mathbb{P}(\mathcal{A} \vert \mathcal{B}) = \mathbb{P}(\mathcal{A})$. Please now think about the multiplication rule of two independent events.
+   \begin{align}
+   \text{Bayes' theorem:} \quad \mathbb{P}(\mathcal{A} \vert \mathcal{B}) = \frac{\mathbb{P}(\mathcal{B} \vert \mathcal{A}) \mathbb{P}(\mathcal{A})}{\mathbb{P}(\mathcal{B})}
+   \end{align}
+\end{remark}
+
+\vspace{0.2cm}
+
+Whooooow, lot's of definitions; these are all we offer on this brief part of the section, but get your butt cheeks ready for more as the following parts contain even more vicious definitions.
+
+\subsection{Even more definitions}
+
+Let us now introduce a few more notions that will be central throughout this course. 
+We have already seen what a random variable is (a way to attach numbers to random outcomes), 
+and what a probability space is. Now we refine these ideas by specifying how random variables distribute their randomness.
+
+\begin{definition}[Distribution and density]
+Given a random variable $X$, its \textbf{cumulative distribution function} (cdf) is
+\[
+F_X(x) := \mathbb{P}(X \leq x), \qquad x \in \mathbb{R}.
+\]
+It tells us how much probability mass has been accumulated up to $x$. 
+
+If $F_X$ is differentiable, we can define the \textbf{probability density function} (pdf)
+\[
+f_X(x) := \frac{d}{dx} F_X(x).
+\]
+This is why we say the density is the ``derivative'' of the distribution function. 
+Intuitively, $f_X(x)$ tells us how tightly probability is packed around $x$. For continuous random variables,
+\[
+\mathbb{P}(a \leq X \leq b) = \int_a^b f_X(x)\, dx.
+\]
+\end{definition}
+
+If you think of $F_X$ as the big ol’ soda machine that pours probability, then 
+$f_X$ is how fast the soda is coming out at a given point. Slow pour (flat density) means spread out 
+probability; fast pour (spike) means a lot of probability concentrated nearby.
+
+\begin{definition}[Joint, marginal, and conditional densities]
+For a pair of random variables $(X,Y)$ with joint density $f_{X,Y}(x,y)$ we define:
+\begin{itemize}
+\item The \textbf{marginal density} of $X$:
+\[
+f_X(x) = \int_{\mathbb{R}} f_{X,Y}(x,y)\, dy,
+\]
+and similarly for $f_Y(y)$. Intuitively, you ``forget'' about one variable by integrating it out.
+
+\item The \textbf{conditional density} of $X$ given $Y=y$ (when $f_Y(y) > 0$):
+\[
+f_{X|Y}(x|y) = \frac{f_{X,Y}(x,y)}{f_Y(y)}.
+\]
+This expresses how $X$ behaves once we fix $Y=y$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Independent and identically distributed samples]
+A collection of random variables $X_1,\dots,X_n$ is called \textbf{independent and identically distributed (i.i.d.)} if:
+\begin{enumerate}
+\item Independence: their joint distribution factors as
+\[
+\mathbb{P}(X_1 \leq x_1, \dots, X_n \leq x_n) = \prod_{i=1}^n \mathbb{P}(X_i \leq x_i).
+\]
+\item Identically distributed: each $X_i$ has the same distribution $F_X$.
+\end{enumerate}
+This means we are drawing observations from the same population, and none of them knows (or cares) about the others. 
+\end{definition}
+
+We now introduce the notion of quantiles, these are basically the “percentile checkpoints” of your distribution. The median is just the 50\% checkpoint — the Switzerland of statistics, perfectly neutral.
+
+\begin{definition}[Quantiles and order statistics]
+For $0 < \alpha < 1$, the \textbf{$\alpha$-quantile} of a random variable $X$ with cdf $F_X$ is
+\[
+q_\alpha := \inf\{x \in \mathbb{R} : F_X(x) \geq \alpha\}.
+\]
+Special cases:
+\begin{itemize}
+\item The median is $q_{0.5}$.
+\item Quartiles are $q_{0.25}$ and $q_{0.75}$.
+\end{itemize}
+Quantiles generalize the idea of medians to any percentage split of the probability mass.
+
+Related to quantiles are the notions of \textbf{minimum}, \textbf{maximum}, \textbf{infimum}, and \textbf{supremum} for sets $A \subset \mathbb{R}$:
+\begin{itemize}
+\item $\min A$: the smallest element of $A$ (if it exists).
+\item $\max A$: the largest element of $A$ (if it exists).
+\item $\inf A$: the greatest lower bound (might not belong to $A$).
+\item $\sup A$: the least upper bound (might not belong to $A$).
+\end{itemize}
+
+Note that the median of $X$ is simply a number $m$ such that half of the probability lies to the left of $m$ and half to the right. 
+It’s the statistical equivalent of sitting right in the middle of a bus, no matter how many people get in.
+\end{definition}
+
+\subsection{Moments (a.k.a.\ expectations and friends)}
+
+Time to arm ourselves with the workhorse concepts of inference: expectations, variances, covariances, and their conditional cousins. 
+Everything here lives on a fixed probability space $(\Omega,\mathcal{F},\mathbb{P})$, and random variables are measurable maps into $(\mathbb{R},\mathcal{B}(\mathbb{R}))$ as defined earlier.
+
+\begin{definition} Expectation (a.k.a.\ the first moment).
+Let $X$ be a real-valued random variable. We say $X$ is \emph{integrable} if $\mathbb{E}[|X|]<\infty$; in that case the (Lebesgue) expectation is
+\[
+\mathbb{E}[X] \;=\; \int_\Omega X(\omega)\, d\mathbb{P}(\omega)
+ \;=\; \int_{\mathbb{R}} x\, dF_X(x),
+\]
+where $F_X$ is the cdf of $X$. In common cases:
+\[
+\text{(discrete)}\quad \mathbb{E}[X]=\sum_{x\in \mathsf{supp}(X)} x\, p_X(x),
+\qquad
+\text{(continuous)}\quad \mathbb{E}[X]=\int_{\mathbb{R}} x\, f_X(x)\,dx,
+\]
+with $p_X$ the pmf and $f_X$ the pdf (when it exists).
+More generally, for a measurable function $g:\mathbb{R}\to\mathbb{R}$ with $\mathbb{E}[\,|g(X)|\,]<\infty$,
+\[
+\mathbb{E}[g(X)] \;=\; \int_{\mathbb{R}} g(x)\, dF_X(x)
+= 
+\begin{cases}
+\sum_x g(x)\,p_X(x), & \text{discrete},\\[4pt]
+\int_{\mathbb{R}} g(x)\, f_X(x)\,dx, & \text{continuous}.
+\end{cases}
+\]
+
+\textbf{Indicator trick:} for $A\in\mathcal{B}(\mathbb{R})$, $\mathbb{E}[\mathbf{1}_{\{X\in A\}}]=\mathbb{P}(X\in A)$.
+
+
+\end{definition}
+
+ Some key properties (whisper them before every exam) we must keep close to our hearts are the following:
+\begin{itemize}
+\item \textbf{Linearity:} $\mathbb{E}[aX+bY]=a\,\mathbb{E}[X]+b\,\mathbb{E}[Y]$ (no independence needed).
+\item \textbf{Monotonicity:} If $X\le Y$ a.s., then $\mathbb{E}[X]\le \mathbb{E}[Y]$.
+\item \textbf{Jensen:} If $\varphi$ is convex and $\mathbb{E}[|X|]<\infty$, then 
+$\varphi(\mathbb{E}[X]) \le \mathbb{E}[\varphi(X)]$.
+\end{itemize}
+
+\paragraph{Worked micro-examples.}
+\begin{itemize}
+\item If $X\sim \mathrm{Bernoulli}(p)$, then $\mathbb{E}[X]=p$ and $\mathbb{E}[g(X)]=g(0)(1-p)+g(1)p$.
+\item If $X\sim \mathcal{N}(\mu,\sigma^2)$ and $g(x)=e^{x}$, then
+$\mathbb{E}[e^{X}]=\exp\!\big(\mu+\tfrac{1}{2}\sigma^2\big)$.
+(One-line proof with the mgf below or by completing the square. Proof contained in ex. sheet 2)
+\end{itemize}
+
+\begin{definition}
+Variance and higher (central) moments.
+The \emph{variance} of an integrable $X$ with finite second moment is
+\[
+\mathrm{Var}(X)\;:=\;\mathbb{E}\big[(X-\mathbb{E}[X])^2\big]
+\;=\;\mathbb{E}[X^2]-\mathbb{E}[X]^2.
+\]
+\textit{Properties:}
+\begin{itemize}
+\item $\mathrm{Var}(aX+b)=a^2\,\mathrm{Var}(X)$.
+\item If $X,Y$ have finite second moments, then 
+$\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)+2\,\mathrm{Cov}(X,Y)$; 
+if $X\perp\!\!\!\perp Y$, this reduces to $\mathrm{Var}(X+Y)=\mathrm{Var}(X)+\mathrm{Var}(Y)$.
+\end{itemize}
+The $k$-th \emph{moment} is $\mathbb{E}[X^k]$ (when finite); the $k$-th \emph{central moment} is $\mathbb{E}[(X-\mathbb{E}[X])^k]$. 
+Skewness and kurtosis are (scaled) third and fourth central moments, respectively.
+
+\paragraph{Covariance and correlation.}
+For square-integrable $X,Y$,
+\[
+\mathrm{Cov}(X,Y)\;:=\;\mathbb{E}\big[(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])\big]
+\;=\;\mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y].
+\]
+\end{definition}
+
+As you might have guessed, these objects also have some neat properties.
+\begin{itemize}
+\item Bilinear and symmetric: $$\mathrm{Cov}(aX+bY, Z)=a\,\mathrm{Cov}(X,Z)+b\,\mathrm{Cov}(Y,Z)$$ and $$\mathrm{Cov}(X,Y)=\mathrm{Cov}(Y,X)$$
+\item Cauchy–Schwarz: $|\mathrm{Cov}(X,Y)|\le \sqrt{\mathrm{Var}(X)\,\mathrm{Var}(Y)}$.
+\item Independence $\Rightarrow$ zero covariance, but not conversely (uncorrelated $\not\Rightarrow$ independent).
+\end{itemize}
