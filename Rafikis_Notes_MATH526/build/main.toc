@@ -6,3 +6,6 @@
 \contentsline {subsection}{\numberline {1.4}Moments (a.k.a.\ expectations and friends)}{9}{subsection.1.4}%
 \contentsline {paragraph}{Worked micro-examples.}{9}{section*.2}%
 \contentsline {paragraph}{Covariance and correlation.}{10}{section*.3}%
+\contentsline {paragraph}{Why it works.}{11}{section*.5}%
+\contentsline {paragraph}{Vector case.}{11}{section*.6}%
+\contentsline {paragraph}{Key facts.}{11}{section*.7}%

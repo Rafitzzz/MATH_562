@@ -301,3 +301,88 @@ As you might have guessed, these objects also have some neat properties.
 \item Cauchy–Schwarz: $|\mathrm{Cov}(X,Y)|\le \sqrt{\mathrm{Var}(X)\,\mathrm{Var}(Y)}$.
 \item Independence $\Rightarrow$ zero covariance, but not conversely (uncorrelated $\not\Rightarrow$ independent).
 \end{itemize}
+
+It measures linear association (not general dependence). Watching two variables waltz? Correlation sees only how well a line fits their steps.
+
+\begin{definition}
+Conditional expectation (w.r.t.\ a $\sigma$-algebra and given a variable):
+Let $\mathcal{G}\subseteq \mathcal{F}$ be a sub-$\sigma$-algebra and $X$ an integrable r.v. 
+The \emph{conditional expectation} $\mathbb{E}[X\mid \mathcal{G}]$ is the (a.s.\ unique) $\mathcal{G}$-measurable r.v.\ such that
+\[
+\int_G \mathbb{E}[X\mid \mathcal{G}]\, d\mathbb{P}
+\;=\;
+\int_G X\, d\mathbb{P}
+\quad\text{for all }G\in \mathcal{G}.
+\]
+Informally: it’s the best $\mathcal{G}$-measurable predictor of $X$ in mean-square (and $L^1$) sense.
+
+\textit{When conditioning on a r.v.\ $Y$:} write $\mathbb{E}[X\mid Y] := \mathbb{E}[X\mid \sigma(Y)]$.  
+If densities exist, the pointwise version is
+\[
+\mathbb{E}[X\mid Y=y] \;=\; \int_{\mathbb{R}} x\, f_{X\mid Y}(x\mid y)\,dx,
+\qquad
+f_{X\mid Y}(x\mid y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}\ \ (f_Y(y)>0).
+\]
+\end{definition}
+
+\textit{Golden properties (use constantly):}
+\begin{itemize}
+\item \textbf{Linearity:} $\mathbb{E}[aX+bZ\mid\mathcal{G}]=a\,\mathbb{E}[X\mid\mathcal{G}]+b\,\mathbb{E}[Z\mid\mathcal{G}]$.
+\item \textbf{Taking out what’s known:} If $H$ is $\mathcal{G}$-measurable and integrable, then 
+$\mathbb{E}[HX\mid\mathcal{G}]=H\,\mathbb{E}[X\mid\mathcal{G}]$.
+\item \textbf{Tower (law of total expectation):} If $\mathcal{H}\subseteq\mathcal{G}$, then 
+$\mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]\mid\mathcal{H}] = \mathbb{E}[X\mid\mathcal{H}]$, in particular $\mathbb{E}[\mathbb{E}[X\mid\mathcal{G}]]=\mathbb{E}[X]$.
+\item \textbf{Independence:} If $X$ is independent of $\mathcal{G}$, then $\mathbb{E}[X\mid\mathcal{G}] = \mathbb{E}[X]$ a.s.
+\end{itemize}
+
+\begin{definition}
+Conditional variance and the law of total variance: \\
+Define $\mathrm{Var}(X\mid \mathcal{G}):=\mathbb{E}\!\big[(X-\mathbb{E}[X\mid\mathcal{G}])^2\mid\mathcal{G}\big]$.  
+Then
+\[
+\mathrm{Var}(X)
+\;=\; \mathbb{E}\big[\mathrm{Var}(X\mid \mathcal{G})\big]
+\;+\; \mathrm{Var}\big(\mathbb{E}[X\mid \mathcal{G}]\big),
+\]
+a.k.a.\ the \emph{law of total variance}.  
+Conditioning explains variance: the average noise \emph{within} groups plus the variance of the group means.
+\end{definition}
+
+\subsection*{Moment generating functions (MGF) and characteristic functions (CF).}
+Let $X$ be a random variable. The \textbf{moment-generating function (MGF)} and \textbf{cumulant-generating function (KGF)} are
+\[
+M_X(t) = \mathbb{E}[e^{tX}], 
+\qquad 
+K_X(t) = \log M_X(t),
+\]
+for those $t$ where $M_X(t)<\infty$.
+
+\paragraph{Why it works.} Since $M_X(0)=1$, expanding $e^{tX}$ via Taylor gives
+\[
+M_X(t) = \mathbb{E}\!\left[\sum_{r=0}^\infty \frac{t^r X^r}{r!}\right]
+= \sum_{r=0}^\infty \frac{t^r}{r!}\,\mathbb{E}[X^r].
+\]
+Hence differentiation at $t=0$ recovers the \emph{moments} $\mathbb{E}[X^r]$. Similarly, expanding $K_X(t)$ produces
+\[
+K_X(t) = \sum_{r=1}^\infty \frac{t^r}{r!}\,\kappa_r,
+\]
+where $\kappa_r$ are the \emph{cumulants} (mean, variance, skewness, etc.).
+
+\paragraph{Vector case.} For $X\in\mathbb{R}^n$,
+\[
+M_X(t)=\mathbb{E}[e^{t^T X}], 
+\qquad 
+K_X(t)=\log M_X(t), \quad t\in\mathbb{R}^n.
+\]
+Differentiating w.r.t.\ $t$ at $0$ yields mean vector and covariance matrix.
+
+\paragraph{Key facts.}
+\begin{itemize}
+\item MGFs/KGFs (if non-trivial) uniquely determine the distribution.
+\item For linear forms $a+BX$, 
+\[
+K_{a+BX}(t)=a^T t + K_X(B^T t).
+\]
+\end{itemize}
+
+\textit{In short:} $M_X(t)$ packages all the moments into one neat function; $K_X(t)$ does the same for cumulants. Think of MGFs as the “moment playlist,” and KGFs as the “compressed highlights version.”
