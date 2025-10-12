@@ -1,0 +1,24 @@
+\subsection{Defining the problem}
+A \textit{location-scale} model is of the form $y_0 = \eta + \tau v_0$ where $\eta$ is the location parameter (a scalar i.e. $\eta \in k$ for an arbitrary field $k$.), $\tau > 0$ is the scale parameter and $v_0$ is a random variable with known distribution.
+Given a \textit{random sample} $y = (y_1, \ldots, y_n)$ with the $y_i$'s being independent, identically distributed (\textit{i.i.d}) random variables from the population $y_0$, we may produce estimators $m(y), s(y)$ for the parameters $\eta, \tau$ respectively.
+
+\vspace{0.2cm}
+
+\begin{itemize}
+    \item Show that $q_1(y, \eta) = \frac{m(y) - \eta}{s(y)}$ and $q_2(y, \tau) = \frac{s(y)}{\tau}$ are pivots. Moreover, explain how could we construct confidence intervals for the paramteres $\eta, \tau$ using these pivots.
+    \item Deduce that pivots can be formed by taking:
+    \begin{itemize}
+        \item $m_1(y) = \bar{y}$ and $s_1(y) = \sqrt{\sum (y_i - \bar{y})^2}$.
+        \item $m_2(y) = $ median$(y)$ and $s_2(y) = $ \textbf{IQR}$(y)$ i.e. the interquartile range.
+    \end{itemize}
+    \item Provide a pivot that could be used to construct a prediction interval for $y_0$ based on $y_1, \ldots, y_n$.
+\end{itemize}
+
+\subsection{Solutuion}
+In order to verify that $q_1, q_2$ are pivots, we need to show that their distributions do not depend on the parameters $\eta, \tau$. In order to do so, we will use the fact that $m, s$ are equivariant estimators of location and scale respectively. We write:
+$$q_1(y, \eta) = \frac{m(y) - \eta}{s(y)} = \frac{m(y_1, \ldots, y_n) - \eta}{s(y_1, \ldots, y_n)} = \frac{m(\eta + \tau v_1, \ldots, \eta + \tau v_n) - \eta}{s(\eta + \tau v_1, \ldots, \eta + \tau v_n)}$$
+$$\Rightarrow q_1(y, \eta) = \frac{\eta + \tau m(v) -\eta}{|\tau| s(v)} = \frac{\tau m(v)}{\tau s(v)} = \frac{m(v)}{s(v)}$$
+hence the distribution of $q_1$ does not depend on $\eta, \tau$ and is in fact the distribution of $\frac{m(v)}{s(v)}$. Similarly, we have:
+$$q_2(y, \tau) = \frac{s(y)}{\tau} = \frac{s(y_1, \ldots, y_n)}{\tau} = \frac{s(\eta + \tau v_1, \ldots, \eta + \tau v_n)}{\tau}$$
+$$\Rightarrow q_2(y, \tau) = \frac{|\tau| s(v)}{\tau} = \frac{\tau s(v)}{\tau} = s(v)$$
+hence the distribution of $q_2$ does not depend on $\eta, \tau$ and is in fact the distribution of $s(v)$.

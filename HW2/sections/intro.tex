@@ -1,0 +1,51 @@
+The aim for this section is to introduce some statistical notions that will be used in order to solve the exercises in this homework.
+We begin exploring the concept of a \textit{statistical pivot}. A statistical pivot (or \emph{pivotal quantity}) is a function of both the sample data and one or more unknown parameters whose \textbf{probability distribution does not depend on those parameters}. 
+\begin{definition}[Statistical Pivot]
+
+Formally, if $X = (X_1, \dots, X_n)$ is a random sample from a distribution depending on a parameter $\theta$, a statistic $T(X, \theta)$ is called a \emph{pivot} if the distribution of $T$ is the same for all possible values of $\theta$.
+\end{definition}
+
+In simpler terms, a pivot is a clever combination of our data $X$ and the unknown parameters $\theta$ that “cancels out” the dependence on those parameters, leaving something whose behavior is fully known. As we'll explore throughout the worked exercises,
+pivotal quantities are extremely useful in statistical inference because they allow us to construct \textbf{confidence intervals} and perform \textbf{hypothesis tests} without knowing the true value of the underlying parameter.
+
+\begin{remark} 
+By using a pivot, we can make probability statements that remain valid for any possible value of $\theta$.
+\end{remark}
+
+\vspace{0.2cm}
+
+\textbf{Intuition:} We may think of a pivot as a “universal yardstick.” It transforms the random variability in your sample into a standardized form that behaves predictably, regardless of the true value of the parameter. This universality is what makes pivots so powerful in practice.
+
+\vspace{0.2cm}
+We now explore the concept of \textit{equivariant estimators}. Equivariant estimators are statistical estimators that maintain a consistent relationship with the data under certain transformations.
+
+\begin{definition}
+    A parameter estimator $g(y)$ is said to be \textbf{equivariant} if it satisfies:
+    $$g(a + by) = g(a + by_1, \ldots, a + by_1) = a + g(by_1, \ldots, by_n) = a + bg(y)$$
+    for all $a \in k$ and $b > 0$.
+\end{definition}
+
+It is useful to recall the following remark regarding the equivariance properties of estimators in a location-scale model.
+
+\begin{remark}[Equivariance properties of estimators]
+For estimators in a location–scale model 
+\[
+Y_i = \eta + \tau V_i, \quad i=1,\dots,n,
+\]
+it is natural to require that they behave consistently under changes of location and scale. 
+A \textbf{location estimator} $m(\cdot)$ is said to be \emph{location–scale equivariant} if
+\[
+m(\eta + \tau v_1, \ldots, \eta + \tau v_n) = \eta + \tau\, m(v_1, \ldots, v_n),
+\]
+that is, translating and rescaling the data simply translates and rescales the estimator in the same way.
+
+Similarly, a \textbf{scale estimator} $s(\cdot)$ is said to be \emph{location invariant} and \emph{scale equivariant} if
+\[
+s(\eta + \tau v_1, \ldots, \eta + \tau v_n) = |\tau|\, s(v_1, \ldots, v_n).
+\]
+Since scale parameters are typically assumed to be positive in practice, we often write this as 
+\[
+s(\eta + \tau v_1, \ldots, \eta + \tau v_n) = \tau\, s(v_1, \ldots, v_n).
+\]
+These properties ensure that both estimators respond to shifts and rescalings of the data in a coherent way, preserving the structure of the underlying model.
+\end{remark}
