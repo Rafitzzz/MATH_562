@@ -14,12 +14,9 @@ By using a pivot, we can make probability statements that remain valid for any p
 
 \vspace{0.2cm}
 
-\textbf{Intuition:} We may think of a pivot as a “universal yardstick.” It transforms the random variability in your sample into a standardized form that behaves predictably, regardless of the true value of the parameter. This universality is what makes pivots so powerful in practice.
-
-\vspace{0.2cm}
 We now explore the concept of \textit{equivariant estimators}. Equivariant estimators are statistical estimators that maintain a consistent relationship with the data under certain transformations.
 
-\begin{definition}
+\begin{definition}[Equivariant estimators]
     A parameter estimator $g(y)$ is said to be \textbf{equivariant} if it satisfies:
     $$g(a + by) = g(a + by_1, \ldots, a + by_1) = a + g(by_1, \ldots, by_n) = a + bg(y)$$
     for all $a \in k$ and $b > 0$.
@@ -27,7 +24,7 @@ We now explore the concept of \textit{equivariant estimators}. Equivariant estim
 
 It is useful to recall the following remark regarding the equivariance properties of estimators in a location-scale model.
 
-\begin{remark}[Equivariance properties of estimators]
+\begin{remark}
 For estimators in a location–scale model 
 \[
 Y_i = \eta + \tau V_i, \quad i=1,\dots,n,
@@ -37,15 +34,46 @@ A \textbf{location estimator} $m(\cdot)$ is said to be \emph{location–scale eq
 \[
 m(\eta + \tau v_1, \ldots, \eta + \tau v_n) = \eta + \tau\, m(v_1, \ldots, v_n),
 \]
-that is, translating and rescaling the data simply translates and rescales the estimator in the same way.
-
-Similarly, a \textbf{scale estimator} $s(\cdot)$ is said to be \emph{location invariant} and \emph{scale equivariant} if
+that is, translating and rescaling the data simply translates and rescales the estimator in the same way. Similarly, a \textbf{scale estimator} $s(\cdot)$ is said to be \emph{location invariant} and \emph{scale equivariant} if
 \[
 s(\eta + \tau v_1, \ldots, \eta + \tau v_n) = |\tau|\, s(v_1, \ldots, v_n).
 \]
-Since scale parameters are typically assumed to be positive in practice, we often write this as 
-\[
-s(\eta + \tau v_1, \ldots, \eta + \tau v_n) = \tau\, s(v_1, \ldots, v_n).
-\]
-These properties ensure that both estimators respond to shifts and rescalings of the data in a coherent way, preserving the structure of the underlying model.
+These properties ensure that both estimators respond to shifts and rescalings of the data, preserving the structure of the underlying model.
 \end{remark}
+
+\vspace{0.2cm}
+
+We now introduce the notion of quantiles, which will be useful in the exercises.
+\begin{definition}[Quantiles]
+    For a random variable $X$ with cumulative distribution function (CDF) $F_X(x)$, the quantile $q_p$ is the value such that:
+    $$\mathbb{P}(X \leq q_p) = p$$
+    i.g. $q_{0.5}$ is the median of $X$. This is just a fancy way of saying `the point where the CDF hits a certain probability'.    
+\end{definition}
+
+\vspace{0.2cm}
+
+We briefly recall the definition of median and interquartile range (IQR), which will be used in the exercises.
+\begin{definition}[Median]
+The median of a dataset is the \textbf{middle value} when the data points are arranged in ascending order. Thus, it may be thought of as a quantile $q_{0.5}$ such
+that
+$$\mathbb{P}(q_i \leq q_{0.5}) = 0.5$$
+\begin{itemize}
+    \item If $n$ is odd, the median is the value at position $\frac{n+1}{2}$.
+    \item If $n$ is even, the median is the average of the values at positions $\frac{n}{2}$ and $\frac{n}{2} + 1$.
+\end{itemize} 
+\end{definition}
+
+Now, we define the interquartile range (IQR) as follows.
+
+\begin{definition}[Interquartile Range]
+    The interquartile range (IQR) is a measure of statistical dispersion, or how spread out the values in a dataset are. It is defined as the difference between the third quartile ($Q_3$) and the first quartile ($Q_1$):
+    $$\text{IQR} = Q_3 - Q_1$$
+    where:
+    \begin{itemize}
+        \item $Q_1$ (the first quartile) is the median of the lower half of the dataset (the 25th percentile i.e. the $q_{.25}$ quantile!).
+        \item $Q_3$ (the third quartile) is the median of the upper half of the dataset (the 75th percentile or $q_{.75}$ quantile).
+    \end{itemize}
+\end{definition}
+
+Note that percentiles and quantiles are very closely related concepts. Percentiles are specific types of quantiles that divide a dataset into 100 equal parts. Thus, 
+percentiles can be viewed as quantiles expressed in terms of percentages.

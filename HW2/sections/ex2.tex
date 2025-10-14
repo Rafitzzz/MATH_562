@@ -21,4 +21,97 @@ $$\Rightarrow q_1(y, \eta) = \frac{\eta + \tau m(v) -\eta}{|\tau| s(v)} = \frac{
 hence the distribution of $q_1$ does not depend on $\eta, \tau$ and is in fact the distribution of $\frac{m(v)}{s(v)}$. Similarly, we have:
 $$q_2(y, \tau) = \frac{s(y)}{\tau} = \frac{s(y_1, \ldots, y_n)}{\tau} = \frac{s(\eta + \tau v_1, \ldots, \eta + \tau v_n)}{\tau}$$
 $$\Rightarrow q_2(y, \tau) = \frac{|\tau| s(v)}{\tau} = \frac{\tau s(v)}{\tau} = s(v)$$
-hence the distribution of $q_2$ does not depend on $\eta, \tau$ and is in fact the distribution of $s(v)$.
+so, the distribution of $q_2$ does not depend on $\eta, \tau$ and is in fact the distribution of $s(v)$.
+
+\vspace{0.2cm}
+
+In order to construct confidence intervals for $\eta, \tau$ using these pivots, we must first choose a confidence level $1 - \alpha$ for some $\alpha \in (0, 1)$. Then, we need to find the quantiles $q_{\alpha_U}, q_{1-\alpha_L}$ of the distribution of $q_i$.
+
+\begin{remark}
+    The quantiles $q_{\alpha_U}, q_{1-\alpha_L}$ are the upper and lower 'cutoff' points of the distribution of $q_i$ such that 
+    $$\mathbb{P}(q_i \leq q_{\alpha_U}) = \alpha_U; \; \mathbb{P}(q_i \leq q_{1-\alpha_L}) = 1 - \alpha_L$$
+    and so, 
+    $$\mathbb{P}(q_{\alpha_U} \leq q_i \leq q_{1-\alpha_L}) = 1 - (\alpha_U + \alpha_L)$$
+    where $\alpha_U + \alpha_L = \alpha$.
+\end{remark}
+
+\vspace{0.2cm}
+
+The following figure \ref{fig:quantiles} ilustrates the quantiles $q_{\alpha_U}, q_{1-\alpha_L}$ of the distribution of $q_i$. Also, the shaded areas denote the probabilities $\alpha_U, \alpha_L$.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/quantiles.png}
+    \caption{Distribution $q_i$ with quantiles $q_{\alpha_U}, q_{1-\alpha_L}$.}
+    \label{fig:quantiles}
+\end{figure}
+
+By the above remark, we may transform the probability statement $\mathbb{P}(q_{\alpha_U} \leq q_i \leq q_{1-\alpha_L}) = 1 - \alpha$ into:
+$$\mathbb{P}\left(q_{\alpha_U} \leq \frac{m(y) - \eta}{s(y)} \leq q_{1-\alpha_L}\right) = 1 - \alpha$$
+$$\mathbb{P}\left(m(y) - q_{1-\alpha_L} s(y) \leq \eta \leq m(y) - q_{\alpha_U} s(y)\right) = 1 - \alpha$$
+which is a $1 - \alpha$ confidence interval for $\eta$. Similarly, we have:
+$$\mathbb{P}(q_{\alpha_U} \leq q_2 \leq q_{1-\alpha_L}) = 1 - \alpha$$
+$$\mathbb{P}\left(q_{\alpha_U} \leq \frac{s(y)}{\tau} \leq q_{1-\alpha_L}\right) = 1 - \alpha$$
+$$\mathbb{P}\left(\frac{s(y)}{q_{1-\alpha_L}} \leq \tau \leq \frac{s(y)}{q_{\alpha_U}}\right) = 1 - \alpha$$
+which is a $1 - \alpha$ confidence interval for $\tau$.
+
+\newpage
+
+Now, we will show that the pairs $(m_1, s_1), (m_2, s_2)$ produce pivots. We start with the first pair:
+$$q_1(y, \eta) = \frac{m_1(y) - \eta}{s_1(y)} = \frac{\bar{y} - \eta}{\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}$$
+
+Before proceeding and expanding the equation above like possesed devils, we make the following remark:
+
+\begin{remark}
+    Note that $\bar{y} = \frac{1}{n} \sum_{i=1}^{n} (\eta + \tau v_i) = \frac{1}{n} (\eta + \tau v_1 + \cdots + \eta + \tau v_n)$. Hence,
+    $$\bar{y} = \frac{1}{n}(n \eta + \tau(\sum_{i=1}^{n} v_i)) = \eta + \tau \bar{v}$$
+    And so, we may write $\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2} = \sqrt{\sum_{i=1}^{n} (\eta + \tau v_i - (\eta + \tau \bar{v}))^2}$. Thus,
+    $$\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2} = \tau \sqrt{\sum_{i=1}^{n} (v_i - \bar{v})^2}$$
+\end{remark}
+
+By the above remark, we get that 
+$$q_1(y, \eta) = \frac{\bar{v}}{\sqrt{\sum_{i=1}^{n} (v_i - \bar{v})^2}}.$$
+
+Note that this only depends on the $v_i$'s where we know the distribution, making $q_1$ a pivot. Similarly, we have:
+
+$$q_2(y, \tau) = \frac{s_1(y)}{\tau} = \frac{\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}{\tau} = \frac{\tau \sqrt{\sum_{i=1}^{n} (v_i - \bar{v})^2}}{\tau}$$
+$$\Rightarrow q_2(y, \tau) = \sqrt{\sum_{i=1}^{n} (v_i - \bar{v})^2}$$
+
+Once again, this only depends on the $v_i$'s where we know the distribution, making $q_2$ a pivot. Using the previous procedure (we might think of it as a recipe for cooking confidence intervals),
+we may construct confidence intervals for $\eta, \tau$ using these pivots as follows:
+$$\mathbb{P}\left(\bar{y} - q_{1-\alpha_L} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2} \leq \eta \leq \bar{y} - q_{\alpha_U} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}\right) = 1 - \alpha$$
+$$\mathbb{P}\left(\frac{\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}{q_{1-\alpha_L}} \leq \tau \leq \frac{\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}{q_{\alpha_U}}\right) = 1 - \alpha$$
+
+\vspace{0.2cm}
+
+We may now proceed with the second pair $(m_2, s_2)$ by recalling the following idea.
+For any $p\in(0,1)$, empirical $p$-quantiles are location--scale equivariant:
+\[
+\widehat q_p(\eta+\tau v)=\eta+\tau\,\widehat q_p(v).
+\]
+Apply this with $p\in\{0.25,0.5,0.75\}$:
+\[
+m_2(y)=\widehat q_{0.5}(y)=\eta+\tau\,\widehat q_{0.5}(v),\qquad
+s_2(y)=\widehat q_{0.75}(y)-\widehat q_{0.25}(y)
+=\tau\big(\widehat q_{0.75}(v)-\widehat q_{0.25}(v)\big).
+\]
+Therefore
+\[
+q_1(y, \eta) = \frac{m_2(y)-\eta}{s_2(y)}
+=\frac{\eta+\tau\,\widehat q_{0.5}(v)-\eta}{\tau(\widehat q_{0.75}(v)-\widehat q_{0.25}(v))}
+=\frac{\widehat q_{0.5}(v)}{\widehat q_{0.75}(v)-\widehat q_{0.25}(v)},
+\]
+which depends only on $v$ and not on $(\eta,\tau)$. As for $q_2$:
+$$q_2(y, \tau) = \frac{s_2(y)}{\tau} = \frac{\tau(\widehat q_{0.75}(v)-\widehat q_{0.25}(v))}{\tau} = (\widehat q_{0.75}(v)-\widehat q_{0.25}(v))$$
+
+again, we're left with a function which only depends on $v$ and not on $(\eta,\tau)$. Hence, both $q_1, q_2$ are pivots. Using the previous procedure, we may construct confidence intervals for $\eta, \tau$ using these pivots as follows:
+$$\mathbb{P}\left(\text{median}(y) - q_{1-\alpha_L} \text{IQR}(y) \leq \eta \leq \text{median}(y) - q_{\alpha_U} \text{IQR}(y)\right) = 1 - \alpha$$
+$$\mathbb{P}\left(\frac{\text{IQR}(y)}{q_{1-\alpha_L}} \leq \tau \leq \frac{\text{IQR}(y)}{q_{\alpha_U}}\right) = 1 - \alpha$$
+
+\vspace{0.2cm}
+
+Finally, we will provide a pivot that could be used to construct a prediction interval for $y_0$ based on $y_1, \ldots, y_n$. We start by writing:
+$$q_3(y, y_0) = \frac{y_0 - m(y)}{s(y)} = \frac{y_0 - m(y_1, \ldots, y_n)}{s(y_1, \ldots, y_n)} = \frac{y_0 - m(\eta + \tau v_1, \ldots, \eta + \tau v_n)}{s(\eta + \tau v_1, \ldots, \eta + \tau v_n)}$$
+$$\Rightarrow q_3(y, y_0) = \frac{\eta + \tau v_0 - (\eta + \tau m(v))}{|\tau| s(v)} = \frac{\tau (v_0 - m(v))}{\tau s(v)} = \frac{v_0 - m(v)}{s(v)}$$
+hence the distribution of $q_3$ does not depend on $\eta, \tau$ and is in fact the distribution of $\frac{v_0 - m(v)}{s(v)}$, making $q_3$ a pivot. Using the previous procedure, we may construct a prediction interval for $y_0$ using this pivot as follows:
+$$\mathbb{P}\left(m(y) + q_{\alpha_U} s(y) \leq y_0 \leq m(y) + q_{1-\alpha_L} s(y)\right) = 1 - \alpha$$ 
