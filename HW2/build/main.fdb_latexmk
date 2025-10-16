@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1760460916.97915 "/home/rafiki/Documents/MATH_562/HW2/main.tex" "build/main.pdf" "main" 1760460917.39347 0
+["pdflatex"] 1760608011.11679 "/home/rafiki/Documents/MATH_562/HW2/main.tex" "build/main.pdf" "main" 1760608011.56108 0
   "/home/rafiki/Documents/MATH_562/HW2/main.tex" 1760262325.30393 2630 a23263428e0ecae70f5c738909498b41 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1755987285 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1755987285 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -192,12 +192,12 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1755987285 42087 b0f9697c952c8f5a8eede4134282cb0d ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1757870295 5311557 9da84c45f5b388655502706482323571 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1757870255 2008254 665957eef637432e26bcf86e3ee5bc70 ""
-  "build/main.aux" 1760460917.35147 2651 32174401d03826b323a5850832723006 "pdflatex"
-  "build/main.out" 1760460917.35247 456 206d6bc765b4271f18823e20b7e8c968 "pdflatex"
-  "build/main.toc" 1760460917.3531 324 5aec470383112b20859a3fbfa0010164 "pdflatex"
+  "build/main.aux" 1760608011.50992 2791 17f18e99ec7593b19ecf71623253f80a "pdflatex"
+  "build/main.out" 1760608011.51115 456 206d6bc765b4271f18823e20b7e8c968 "pdflatex"
+  "build/main.toc" 1760608011.51115 324 5aec470383112b20859a3fbfa0010164 "pdflatex"
   "figures/quantiles.png" 1760439620.54785 561864 1f75f94ca689d5f0fca80b270d15b3e3 ""
   "main.tex" 1760262325.30393 2630 a23263428e0ecae70f5c738909498b41 ""
-  "sections/ex2.tex" 1760460916.83647 8391 b0f4d1798b569658cdba0c2f6047207d ""
+  "sections/ex2.tex" 1760608010.97451 8828 8b2e32f08093c64ea1a30841674f553f ""
   "sections/intro.tex" 1760452012.51251 4748 87342d1890ee694d5c6b8ef452b8b672 ""
   (generated)
   "build/main.aux"

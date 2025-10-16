@@ -84,8 +84,8 @@ $$\mathbb{P}\left(\frac{\sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}{q_{1-\alpha_L}}
 
 \vspace{0.2cm}
 
-We may now proceed with the second pair $(m_2, s_2)$ by recalling the following idea.
-For any $p\in(0,1)$, empirical $p$-quantiles are location--scale equivariant:
+We may now proceed with the second pair $(m_2, s_2)$ by recalling the following idea;
+For any $p\in(0,1)$, empirical $p$-quantiles are location--scale equivariant (since we're assuming $(m_2, s_2)$ are estimators of location and scale parameters and they're also equivariant by assumption):
 \[
 \widehat q_p(\eta+\tau v)=\eta+\tau\,\widehat q_p(v).
 \]
@@ -110,8 +110,12 @@ $$\mathbb{P}\left(\frac{\text{IQR}(y)}{q_{1-\alpha_L}} \leq \tau \leq \frac{\tex
 
 \vspace{0.2cm}
 
-Finally, we will provide a pivot that could be used to construct a prediction interval for $y_0$ based on $y_1, \ldots, y_n$. We start by writing:
+Finally, we provide a pivot that can be used to construct a prediction interval for $y_0$ based on $y_1, \ldots, y_n$. We start by writing:
 $$q_3(y, y_0) = \frac{y_0 - m(y)}{s(y)} = \frac{y_0 - m(y_1, \ldots, y_n)}{s(y_1, \ldots, y_n)} = \frac{y_0 - m(\eta + \tau v_1, \ldots, \eta + \tau v_n)}{s(\eta + \tau v_1, \ldots, \eta + \tau v_n)}$$
 $$\Rightarrow q_3(y, y_0) = \frac{\eta + \tau v_0 - (\eta + \tau m(v))}{|\tau| s(v)} = \frac{\tau (v_0 - m(v))}{\tau s(v)} = \frac{v_0 - m(v)}{s(v)}$$
 hence the distribution of $q_3$ does not depend on $\eta, \tau$ and is in fact the distribution of $\frac{v_0 - m(v)}{s(v)}$, making $q_3$ a pivot. Using the previous procedure, we may construct a prediction interval for $y_0$ using this pivot as follows:
 $$\mathbb{P}\left(m(y) + q_{\alpha_U} s(y) \leq y_0 \leq m(y) + q_{1-\alpha_L} s(y)\right) = 1 - \alpha$$ 
+
+\begin{remark}
+    Note that a prediction interval is very similar to a confidence interval. The only difference is the fact that confidence intervals quantify uncertainty for a certain parameter (i.g. $\eta, \tau$) while prediction intervals quantify uncertainty for a future observation (i.g. $y_0$).
+\end{remark}
