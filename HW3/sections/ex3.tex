@@ -1,0 +1,102 @@
+\subsection{Defining the problem}
+
+Observations $Y_1, \ldots, Y_n$ arise in time order. 
+
+\begin{enumerate}
+    \item Starting from
+    $$f_{Y_1, \ldots, Y_n}(y_1, \ldots, y_n) \; = \; f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1})f_{Y_1, \ldots, Y_{n-1}}(y_1, \ldots, y_{n-1}),$$
+    establish the \textit{prediction decomposition}
+    $$f_{Y_1, \ldots, Y_n}(y_1, \ldots, y_n) = f_{Y_1}(y_1) \prod_{j=2}^{n}f_{Y_j | Y_1, \ldots, Y_{j-1}}(y_j | y_1, \ldots, y_{j-1}).$$
+    \item A stationary first-order Gaussian autoregressive process satisfies
+    $$Y_j | Y_1 = y_1, \ldots, Y_j | Y_{j-1} = y_{j-1} \sim \mathcal{N}(\mu + \alpha(y_{j-1}-\mu), \sigma^2) \; \text{for } j = 1, \ldots, n$$
+    with $|\alpha| < 1$, $\mu \in \mathbb{R}$, and $\sigma^2 > 0$. Find the log likelihood for data $y_0, \ldots, y_n$ for this model if the initial value $y_0$ is treated
+    \begin{enumerate}
+        \item fixed as known constant,
+        \item coming from the stationary distribution $\mathcal{N}(\mu, \frac{\sigma^2}{1-\alpha^2})$
+    \end{enumerate}
+    \item Give a minimal sufficient statistic for $\theta = (\mu, \sigma^2, \alpha)$ in (2). Does the model with parameter vector $\theta$ form
+    an exponential family?
+\end{enumerate}
+
+\subsection{Solution}
+
+We first show the prediction decomposition formula starting from the given identity on (1).
+$$f_{Y_1, \ldots, Y_n}(y_1, \ldots, y_n) \; = \; f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1})f_{Y_1, \ldots, Y_{n-1}}(y_1, \ldots, y_{n-1})$$
+$$= f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1}) f_{Y_{n-1} | Y_1, \ldots, Y_{n-2}}(y_{n-1} | y_1, \ldots, y_{n-2}) f_{Y_1, \ldots, Y_{n-2}}(y_1, \ldots, y_{n-2})$$
+$$= f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1}) f_{Y_{n-1} | Y_1, \ldots, Y_{n-2}}(y_{n-1} | y_1, \ldots, y_{n-2}) \cdots f_{Y_2 | Y_1}(y_2 | y_1) f_{Y_1}(y_1)$$
+$$= f_{Y_1}(y_1) \prod_{j=2}^{n}f_{Y_j | Y_1, \ldots, Y_{j-1}}(y_j | y_1, \ldots, y_{j-1}).$$ 
+
+Now, suppose we observe data $y_1, \ldots, y_n$ from the autoregressive process
+\[
+Y_j = \mu + \alpha(Y_{j-1} - \mu) + \varepsilon_j, 
+\qquad \varepsilon_j \sim \mathcal{N}(0, \sigma^2),
+\]
+with $|\alpha| < 1$.  
+The main (small but important) difference in writing the likelihood starts from how we treat the initial condition $Y_0$:
+
+\paragraph{(a) Conditional (profile) likelihood.}
+If the initial value $y_0$ is treated as a fixed, known constant, we condition on it and write
+\[
+L_c(\mu,\alpha,\sigma^2 \,;\, y_1,\ldots,y_n \mid y_0)
+  = \prod_{j=1}^n f(y_j \mid y_{j-1};\, \mu,\alpha,\sigma^2),
+\]
+where
+\[
+Y_j \mid Y_{j-1}=y_{j-1} \sim 
+  \mathcal{N}\big(\mu+\alpha(y_{j-1}-\mu),\,\sigma^2\big).
+\]
+Hence, the conditional log-likelihood is
+\[
+\ell_c(\mu,\alpha,\sigma^2)
+  = -\frac{n}{2}\log(2\pi\sigma^2)
+    -\frac{1}{2\sigma^2}\sum_{j=1}^n
+       [y_j-\mu-\alpha(y_{j-1}-\mu)]^2.
+\]
+Here $y_0$ enters only in the first term (i.e. the term $y_1 \mid y_0$),
+but no density is assigned to $y_0$ by itself.
+
+\paragraph{(b) Exact (unconditional) likelihood under stationarity.}
+If we assume the process is stationary, then
+\[
+Y_0 \sim \mathcal{N}\!\left(\mu,\,\frac{\sigma^2}{1-\alpha^2}\right),
+\]
+and so, weget that the marginal (stationary) distribution of the first observation is
+\[
+Y_1 \sim \mathcal{N}\!\left(\mu,\,\frac{\sigma^2}{1-\alpha^2}\right).
+\]
+Integrating out the unobserved $Y_0$ leads to the \emph{exact likelihood}
+\[
+L_e(\mu,\alpha,\sigma^2 \,;\, y_1,\ldots,y_n)
+  = f\!\left(y_1; \mu, \tfrac{\sigma^2}{1-\alpha^2}\right)
+    \prod_{j=2}^n f(y_j \mid y_{j-1};\, \mu,\alpha,\sigma^2),
+\]
+and the corresponding log-likelihood is
+$$
+\ell_e(\mu,\alpha,\sigma^2)
+  = -\frac{1}{2}\log\!\frac{2\pi\sigma^2}{1-\alpha^2}
+    -\frac{(y_1-\mu)^2(1-\alpha^2)}{2\sigma^2}
+    -\frac{n-1}{2}\log(2\pi\sigma^2)
+    -\frac{1}{2\sigma^2}\sum_{j=2}^n
+       [y_j-\mu-\alpha(y_{j-1}-\mu)]^2.
+$$
+
+\paragraph{Interpretation:}
+\begin{itemize}
+  \item The \textbf{conditional likelihood} treats $y_0$ as a fixed starting point and models only the transitions $Y_j \mid Y_{j-1}$ for $j=1,\dots,n$.
+  \item The \textbf{exact likelihood} assumes $Y_0$ (and hence $Y_1$) come from the stationary distribution and therefore includes their marginal densities.
+  \item Both forms give consistent estimates of $(\mu,\alpha,\sigma^2)$ as $n\to\infty$, but they differ slightly in small samples.
+\end{itemize}
+
+\subsection*{Minimal Sufficient Statistic}
+Note that likelihood depends on the data only through (if expanded and rearranged, the term in the summation that is)
+$$\hat{T}(y)=\left(\sum_{j=1}^n y_j, \sum_{j=1}^n y_{j-1}, \sum_{j=1}^n y_j y_{j-1}, \sum_{j=1}^n y_j^2, \sum_{j=1}^n y_{j-1}^2\right),$$
+
+\begin{remark}
+    Note that the term $\sum_{j=1}^n y_{j-1}^2$ can be omitted since it can be computed from $\sum_{j=1}^n y_j^2$ and the known initial value $y_0$ as
+    $$\sum_{j=1}^n y_{j-1}^2 = \sum_{j=0}^{n-1} y_j^2 = \sum_{j=1}^{n} y_j^2 + y_0^2 - y_n^2.$$
+\end{remark}
+
+and so, we define $T(y)=\left(\sum_{j=1}^n y_j, \sum_{j=1}^n y_{j-1}, \sum_{j=1}^n y_j y_{j-1}, \sum_{j=1}^n y_j^2\right)$ which is then minimal sufficient for $\theta=(\mu,\sigma^2,\alpha)$.
+
+\subsection*{Exponential Family}
+Since the Gaussian family is an exponential family, so is the AR(1) model. Hence we conclude the model with parameter vector $\theta$ forms an exponential family and thus the work is done.

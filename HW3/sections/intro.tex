@@ -1,0 +1,46 @@
+We hope to introduce the reader to the main ideas and methods that will be used throughout this work.
+
+\begin{definition}[Chain rule for densities]
+    For random variables $Y_1,\dots,Y_n$,
+    \[
+    f_{Y_1,\dots,Y_n}(y_1,\dots,y_n)
+    = f_{Y_1}(y_1)
+    \prod_{j=2}^n f_{Y_j \mid Y_1,\dots,Y_{j-1}}(y_j \mid y_1,\dots,y_{j-1}).
+    \]
+    This identity, called the \emph{prediction decomposition}, expresses the joint density as the product of one-step-ahead conditional densities.
+\end{definition}
+
+\subsection{AR(1) Gaussian Process}
+The following process is an autoregressive model of order~1 (AR(1)):
+$$Y_j = \mu + \alpha(Y_{j-1}-\mu) + \varepsilon_j, \quad \varepsilon_j \sim \mathcal{N}(0,\sigma^2),$$
+
+whuch satisfies the following conditional distribution:
+$$Y_j \mid Y_{j-1}=y_{j-1} \sim \mathcal{N}\{\mu+\alpha(y_{j-1}-\mu),\,\sigma^2\}.$$
+
+\subsection{Likelihood}
+As a preliminary note, we define the likelihood function $L(\textbf{y} | \theta)$ as $\mathbb{P}(\text{seeing data} | \theta) = \mathbb{P}(y_1, \ldots, y_n | \theta)$ which
+`splits' due to the property of independence. More formally,
+
+\begin{definition}[Likelihood]
+    Let $\textbf{y} = (y_1, \ldots, y_n)$ be i.i.d. samples from a probability mass function (pmf) $p_{Y}(t | \theta)$ (if $Y$ is discrete) or probability density
+    function (pdf) $f_{Y}(t | \theta)$ (if $Y$ is continuous) parameterized (with parameter) by $\theta \in \Theta$. We define
+    the likelihood of $\textbf{y}$ given $\theta$ to be the “probability” of observing \textbf{y} if the true parameter is $\theta$.
+    If $Y$ is discrete,
+    $$L(\textbf{y}| \theta) = \prod_{i=1}^{n}p_{Y}(y_i | \theta)$$
+
+    and if $Y$ is continuous,
+    $$L(\textbf{y}| \theta) = \prod_{i=1}^{n}f_{Y}(y_i | \theta).$$
+
+\end{definition}
+
+Hence, the likelihood function for data $y_0,\ldots,y_n$ from an AR(1) Gaussian process with known initial value $y_0$ is given by
+\[
+L(\mu,\alpha,\sigma^2) = \prod_{j=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\{-\frac{1}{2\sigma^2}[y_j - \mu - \alpha(y_{j-1}-\mu)]^2\right\}.
+\]
+
+\begin{remark}
+    The log-likelihood function is often more convenient to work with, as it transforms products into sums. The log-likelihood for the AR(1) Gaussian process is
+    \[
+    \ell(\mu,\alpha,\sigma^2) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{j=1}^n [y_j - \mu - \alpha(y_{j-1}-\mu)]^2.
+    \]
+\end{remark}
