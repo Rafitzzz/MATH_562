@@ -26,6 +26,8 @@ $$= f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1}) f_{Y_{n-1} | Y_1,
 $$= f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1}) f_{Y_{n-1} | Y_1, \ldots, Y_{n-2}}(y_{n-1} | y_1, \ldots, y_{n-2}) \cdots f_{Y_2 | Y_1}(y_2 | y_1) f_{Y_1}(y_1)$$
 $$= f_{Y_1}(y_1) \prod_{j=2}^{n}f_{Y_j | Y_1, \ldots, Y_{j-1}}(y_j | y_1, \ldots, y_{j-1}).$$ 
 
+\subsubsection{Likelihood functions for AR(1) process}
+
 Now, suppose we observe data $y_1, \ldots, y_n$ from the autoregressive process
 \[
 Y_j = \mu + \alpha(Y_{j-1} - \mu) + \varepsilon_j, 
@@ -80,23 +82,29 @@ $$
        [y_j-\mu-\alpha(y_{j-1}-\mu)]^2.
 $$
 
-\paragraph{Interpretation:}
+\paragraph{Interpretation (for me to remember $\ldots$):}
 \begin{itemize}
   \item The \textbf{conditional likelihood} treats $y_0$ as a fixed starting point and models only the transitions $Y_j \mid Y_{j-1}$ for $j=1,\dots,n$.
   \item The \textbf{exact likelihood} assumes $Y_0$ (and hence $Y_1$) come from the stationary distribution and therefore includes their marginal densities.
   \item Both forms give consistent estimates of $(\mu,\alpha,\sigma^2)$ as $n\to\infty$, but they differ slightly in small samples.
 \end{itemize}
 
-\subsection*{Minimal Sufficient Statistic}
+\subsubsection{Minimal Sufficient Statistic}
 Note that likelihood depends on the data only through (if expanded and rearranged, the term in the summation that is)
 $$\hat{T}(y)=\left(\sum_{j=1}^n y_j, \sum_{j=1}^n y_{j-1}, \sum_{j=1}^n y_j y_{j-1}, \sum_{j=1}^n y_j^2, \sum_{j=1}^n y_{j-1}^2\right),$$
 
 \begin{remark}
-    Note that the term $\sum_{j=1}^n y_{j-1}^2$ can be omitted since it can be computed from $\sum_{j=1}^n y_j^2$ and the known initial value $y_0$ as
+    Note that the term $\sum_{j=1}^n y_{j-1}^2$ can be ``omitted" (more like rewritten) since it can be computed from $\sum_{j=1}^n y_j^2$ and the known initial value $y_0$ (i.e. it is just 
+    lagged term of the $y_j$) as follows:
     $$\sum_{j=1}^n y_{j-1}^2 = \sum_{j=0}^{n-1} y_j^2 = \sum_{j=1}^{n} y_j^2 + y_0^2 - y_n^2.$$
 \end{remark}
 
-and so, we define $T(y)=\left(\sum_{j=1}^n y_j, \sum_{j=1}^n y_{j-1}, \sum_{j=1}^n y_j y_{j-1}, \sum_{j=1}^n y_j^2\right)$ which is then minimal sufficient for $\theta=(\mu,\sigma^2,\alpha)$.
+following the remark assbove, we define the following statistic:
+\vspace{0.2cm}
+$$T(y)=\left(\sum_{j=1}^n y_j, \sum_{j=1}^n y_{j-1}, \sum_{j=1}^n y_j y_{j-1}, \sum_{j=1}^n y_j^2\right),$$
+\vspace{0.2cm}
 
-\subsection*{Exponential Family}
-Since the Gaussian family is an exponential family, so is the AR(1) model. Hence we conclude the model with parameter vector $\theta$ forms an exponential family and thus the work is done.
+which is then minimal sufficient for $\theta=(\mu,\sigma^2,\alpha)$.
+
+\subsubsection*{Exponential Family}
+Since the Gaussian family is an exponential family, so is the AR(1) model. Hence we conclude the model with parameter vector $\theta$ forms an exponential family and thus the homework is finished!

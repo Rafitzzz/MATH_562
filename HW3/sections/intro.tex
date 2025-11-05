@@ -39,8 +39,9 @@ L(\mu,\alpha,\sigma^2) = \prod_{j=1}^n \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left\{
 \]
 
 \begin{remark}
-    The log-likelihood function is often more convenient to work with, as it transforms products into sums. The log-likelihood for the AR(1) Gaussian process is
-    \[
-    \ell(\mu,\alpha,\sigma^2) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{j=1}^n [y_j - \mu - \alpha(y_{j-1}-\mu)]^2.
-    \]
+    Note that the log-likelihood function is just the logarithm of the likelihood function. It is sometimes more convenient to work with
+    since the logarithm of a product is the sum of the logarithms hence, it transforms products into sums. More formally, the log-likelihood function is given by
+    $$\ell (\textbf{y}|\theta) := \operatorname{log}_{e}L(\textbf{y}|\theta) = \sum_{i=1}^{n} \operatorname{log}_{e} f_{Y}(y_i | \theta)$$
 \end{remark}
+
+For the discrete case, switch $f_{Y}$ with $p_{Y}$ in the above expression.
