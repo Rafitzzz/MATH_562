@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1762355929.99776 "/home/rafiki/Documents/MATH_562/HW3/main.tex" "build/main.pdf" "main" 1762355930.39484 0
-  "/home/rafiki/Documents/MATH_562/HW3/main.tex" 1761575385.29424 2630 f30c8dfc2cd98a5021879fb4bcf9db33 ""
+["pdflatex"] 1762441492.8243 "/home/rafiki/Documents/MATH_562/HW3/main.tex" "build/main.pdf" "main" 1762441493.23806 0
+  "/home/rafiki/Documents/MATH_562/HW3/main.tex" 1762440000.06754 2624 29887ad23ebe80f963a0b42c96441c99 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1755987285 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1755987285 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1755987285 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -195,11 +195,11 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1755987285 42087 b0f9697c952c8f5a8eede4134282cb0d ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1757870295 5311557 9da84c45f5b388655502706482323571 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1757870255 2008254 665957eef637432e26bcf86e3ee5bc70 ""
-  "build/main.aux" 1762355930.34954 2453 82f46180e83f524d6e74776583761f71 "pdflatex"
-  "build/main.out" 1762355930.35054 1225 ab60262bf3eae4924b305f5262aa50db "pdflatex"
-  "build/main.toc" 1762355930.35054 976 530bc78a44fbb8ad97213dc31274da65 "pdflatex"
-  "main.tex" 1761575385.29424 2630 f30c8dfc2cd98a5021879fb4bcf9db33 ""
-  "sections/ex3.tex" 1762355929.85794 5624 ab831ebaec915facbd546911aed651ac ""
+  "build/main.aux" 1762441493.1894 3029 d60f73f297ee9ca824dd37f7453b478f "pdflatex"
+  "build/main.out" 1762441493.1904 1473 79a831c2692d01b92e56426d77864e17 "pdflatex"
+  "build/main.toc" 1762441493.19182 1125 1a2aab00d158d25beff918e846f836d0 "pdflatex"
+  "main.tex" 1762440000.06754 2624 29887ad23ebe80f963a0b42c96441c99 ""
+  "sections/ex3.tex" 1762441492.68039 8287 abeb52df9cb1e0beeb8b5d55dabce479 ""
   "sections/intro.tex" 1762355320.63306 2605 6c9b3805530a0c28052ec58db4da305b ""
   (generated)
   "build/main.aux"

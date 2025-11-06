@@ -21,10 +21,15 @@ Observations $Y_1, \ldots, Y_n$ arise in time order.
 \subsection{Solution}
 
 We first show the prediction decomposition formula starting from the given identity on (1).
+\subsubsection{Prediction decomposition derivation}
+
 $$f_{Y_1, \ldots, Y_n}(y_1, \ldots, y_n) \; = \; f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1})f_{Y_1, \ldots, Y_{n-1}}(y_1, \ldots, y_{n-1})$$
 $$= f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1}) f_{Y_{n-1} | Y_1, \ldots, Y_{n-2}}(y_{n-1} | y_1, \ldots, y_{n-2}) f_{Y_1, \ldots, Y_{n-2}}(y_1, \ldots, y_{n-2})$$
 $$= f_{Y_n | Y_1, \ldots, Y_{n-1}}(y_n | y_1, \ldots, y_{n-1}) f_{Y_{n-1} | Y_1, \ldots, Y_{n-2}}(y_{n-1} | y_1, \ldots, y_{n-2}) \cdots f_{Y_2 | Y_1}(y_2 | y_1) f_{Y_1}(y_1)$$
 $$= f_{Y_1}(y_1) \prod_{j=2}^{n}f_{Y_j | Y_1, \ldots, Y_{j-1}}(y_j | y_1, \ldots, y_{j-1}).$$ 
+
+This shows that the joint density equals the product of the onestep ahead predictive densities. In other words, the joiunt behaviour of the whole sequience is built by multiplying all the
+``predictive'' pieces.
 
 \subsubsection{Likelihood functions for AR(1) process}
 
@@ -33,23 +38,18 @@ Now, suppose we observe data $y_1, \ldots, y_n$ from the autoregressive process
 Y_j = \mu + \alpha(Y_{j-1} - \mu) + \varepsilon_j, 
 \qquad \varepsilon_j \sim \mathcal{N}(0, \sigma^2),
 \]
-with $|\alpha| < 1$.  
-The main (small but important) difference in writing the likelihood starts from how we treat the initial condition $Y_0$:
+with $|\alpha| < 1$. Note that the \textbf{gaussian} noises $\varepsilon_j$'s are i.i.d. This model means each $Y_j$ depends linearly on the previous value $Y_{j-1}$ plus some gaussian noise.
+Hence, this implies that 
+$$Y_j | Y_{j-1} \sim \mathcal{N}(\mu + \alpha(y_{j-1} - \mu), \sigma^2).$$ 
 
-\paragraph{(a) Conditional (profile) likelihood.}
-If the initial value $y_0$ is treated as a fixed, known constant, we condition on it and write
+\paragraph{Case (i): Dealing with $y_0$ as a known constant.}
+If the initial value $y_0$ is treated as a fixed, known constant, then we may write the joint pdf of the realizations ($y_1, \ldots, y_n$) of the observations as:
+
+$$f(y_1, \ldots, y_n | \mu, \alpha, \sigma^2) = \prod_{j=1}^{n} f(y_j | y_{j-1};\mu, \alpha, \sigma^2)$$
+
+And so, we might write the conditional log-likelihood as
 \[
-L_c(\mu,\alpha,\sigma^2 \,;\, y_1,\ldots,y_n \mid y_0)
-  = \prod_{j=1}^n f(y_j \mid y_{j-1};\, \mu,\alpha,\sigma^2),
-\]
-where
-\[
-Y_j \mid Y_{j-1}=y_{j-1} \sim 
-  \mathcal{N}\big(\mu+\alpha(y_{j-1}-\mu),\,\sigma^2\big).
-\]
-Hence, the conditional log-likelihood is
-\[
-\ell_c(\mu,\alpha,\sigma^2)
+\ell(\mu,\alpha,\sigma^2)
   = -\frac{n}{2}\log(2\pi\sigma^2)
     -\frac{1}{2\sigma^2}\sum_{j=1}^n
        [y_j-\mu-\alpha(y_{j-1}-\mu)]^2.
@@ -57,7 +57,7 @@ Hence, the conditional log-likelihood is
 Here $y_0$ enters only in the first term (i.e. the term $y_1 \mid y_0$),
 but no density is assigned to $y_0$ by itself.
 
-\paragraph{(b) Exact (unconditional) likelihood under stationarity.}
+\paragraph{Case (ii): Dealing witht the devil; $y_0$ is random, from stationary distribution.}
 If we assume the process is stationary, then
 \[
 Y_0 \sim \mathcal{N}\!\left(\mu,\,\frac{\sigma^2}{1-\alpha^2}\right),
@@ -107,4 +107,66 @@ $$T(y)=\left(\sum_{j=1}^n y_j, \sum_{j=1}^n y_{j-1}, \sum_{j=1}^n y_j y_{j-1}, \
 which is then minimal sufficient for $\theta=(\mu,\sigma^2,\alpha)$.
 
 \subsubsection*{Exponential Family}
-Since the Gaussian family is an exponential family, so is the AR(1) model. Hence we conclude the model with parameter vector $\theta$ forms an exponential family and thus the homework is finished!
+
+\begin{theorem}[Conditional AR(1) is an exponential family]
+Fix $y_0\in\mathbb R$. Let $(Y_j)_{j=1}^n$ satisfy the Gaussian AR(1)
+\[
+Y_j \mid Y_{j-1}=y_{j-1}\ \sim\ \mathcal N\!\big(\mu+\alpha(y_{j-1}-\mu),\,\sigma^2\big),
+\quad j=1,\dots,n,
+\]
+with parameter $\theta=(\mu,\alpha,\sigma^2)$ and $|\alpha|<1$. Then the conditional joint density
+$f_\theta(y_1,\dots,y_n\mid y_0)=\prod_{j=1}^n f_\theta(y_j\mid y_{j-1})$ belongs to a (regular) exponential family.
+\end{theorem}
+
+\begin{proof}
+Write the conditional density
+\[
+f_\theta(y_j\mid y_{j-1})
+=(2\pi\sigma^2)^{-1/2}
+\exp\!\left\{-\frac{1}{2\sigma^2}\big(y_j-\mu-\alpha(y_{j-1}-\mu)\big)^2\right\}.
+\]
+Hence
+\[
+\log f_\theta(y_{1:n}\mid y_0)
+=-\frac{n}{2}\log(2\pi\sigma^2)
+-\frac{1}{2\sigma^2}\sum_{j=1}^n\big(y_j-\alpha y_{j-1}-(1-\alpha)\mu\big)^2.
+\]
+Expanding the square and collecting terms that depend on the data gioves
+
+\[
+\log f_\theta(y_{1:n}\mid y_0)
+= C(\theta) + \eta_1(\theta)\sum_{j=1}^n y_j^2
++\eta_2(\theta)\sum_{j=1}^n y_{j-1}^2
++\eta_3(\theta)\sum_{j=1}^n y_jy_{j-1}
++\eta_4(\theta)\sum_{j=1}^n y_j
++\eta_5(\theta)\sum_{j=1}^n y_{j-1},
+\]
+
+where the \emph{natural parameters} $(\eta_k(\theta))$ are smooth functions of $(\mu,\alpha,\sigma^2)$
+(e.g.\ $\eta_1(\theta)=-\tfrac{1}{2\sigma^2}$, $\eta_3(\theta)=\tfrac{\alpha}{\sigma^2}$, etc.), and
+$C(\theta)$ \emph{absorbs} all terms free of $y_{1:n} = (y_1, \ldots, y_n)$.
+So
+\[
+f_\theta(y_{1:n}\mid y_0)
+= h(y_{1:n}\mid y_0)\,
+\exp\!\Big\{ \sum_{k=1}^5 \eta_k(\theta)\, T_k(y_{1:n}) - A(\theta)\Big\},
+\]
+where $h(y_{1:n}\mid y_0)\equiv 1$ (I believe this function is sometimes called \emph{carrier}), and sufficient statistics
+\[
+T_1=\sum y_j^2,\quad
+T_2=\sum y_{j-1}^2,\quad
+T_3=\sum y_jy_{j-1},\quad
+T_4=\sum y_j,\quad
+T_5=\sum y_{j-1}.
+\]
+
+This is exactly the canonical (normal, `bread and butter') exponential-family form in $\mathbb R^5$, hence the claim. (Note that $-C(\theta) = A(\theta)$)
+\end{proof}
+
+\begin{remark}[On the role of $Y_0$]
+The statement is \emph{conditional on} $y_0$. If one assumes a stationary start
+$Y_0\sim\mathcal N(\mu,\sigma^2/(1-\alpha^2))$, then the \emph{exact} joint density
+$f_\theta(y_0,\dots,y_n)$ is also an exponential family after adding the marginal term for $y_0$,
+with the same type of quadratic/linear sufficient statistics augmented by $y_0$-terms.
+If $Y_0$ has unspecified law, only the conditional likelihood admits the exponential-family factorization.
+\end{remark}
